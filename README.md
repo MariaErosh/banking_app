@@ -1,10 +1,18 @@
 # Banking Service
 
-This is a Java Spring Boot application built with Spring Boot, PostgreSQL, and Flyway for database migration.
-It supports basic user and account management with email or phone data.
+This is a Java-based Spring Boot application that provides core functionality for user and 
+account management. It uses PostgreSQL as the primary database and Flyway for automated database migrations.
 
-### *Stack:* 
-#### *Java, Spring Boot, PostgreSQL, Docker Compose, Flyway, JWT, Testcontainer, MockMvc.* 
+###  Features
+
+- User registration and management
+- Account creation with balance tracking
+- Support for associated contact data (emails and phone numbers)
+- Scheduled balance updates
+- JWT-based authentication for secure API access
+
+### *Tech Stack:* 
+#### *Java, Spring Boot, PostgreSQL, Docker Compose, Flyway, JWT, Testcontainer, MockMvc* 
 
 ## Project Build
 
