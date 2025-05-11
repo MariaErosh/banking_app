@@ -1,6 +1,6 @@
 package com.pioner.banking.api.security;
 
-import com.pioner.banking.dao.repository.UserRepository;
+import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,15 +15,15 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final UserRepository userRepository;
 
-    public JwtFilter(JwtUtil jwtUtil, UserRepository userRepository) {
+    public JwtFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
-        this.userRepository = userRepository;
     }
 
     @Override
-    protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, jakarta.servlet.FilterChain filterChain)
+    protected void doFilterInternal( HttpServletRequest request,
+                                     HttpServletResponse response,
+                                     FilterChain filterChain)
             throws ServletException, IOException {
 
         String token = getTokenFromRequest(request);

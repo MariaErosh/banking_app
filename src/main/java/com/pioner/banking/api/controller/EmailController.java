@@ -4,6 +4,7 @@ import com.pioner.banking.api.dto.EmailAddRequest;
 import com.pioner.banking.api.dto.EmailUpdateRequest;
 import com.pioner.banking.api.security.JwtUtil;
 import com.pioner.banking.service.EmailService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +23,7 @@ public class EmailController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addEmail(@RequestBody EmailAddRequest request) {
+    public ResponseEntity<Void> addEmail(@Valid @RequestBody EmailAddRequest request) {
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         emailService.addEmail(userId, request.getEmail());
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -30,14 +31,14 @@ public class EmailController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateEmail(@RequestBody EmailUpdateRequest request) {
+    public ResponseEntity<Void> updateEmail(@Valid @RequestBody EmailUpdateRequest request) {
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         emailService.updateEmail(userId, request.getEmail(), request.getNewEmail());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{email}")
-    public ResponseEntity<Void> deleteEmail(@PathVariable String email) {
+    public ResponseEntity<Void> deleteEmail(@Valid @PathVariable String email) {
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         emailService.deleteEmail(userId, email);
         return ResponseEntity.noContent().build();

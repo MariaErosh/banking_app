@@ -5,6 +5,7 @@ import com.pioner.banking.api.dto.UserDto;
 import com.pioner.banking.dao.entity.User;
 import com.pioner.banking.service.UserSearchService;
 import com.pioner.banking.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,13 +37,13 @@ public class UserController {
     }
 
     @PostMapping("/login/email")
-    public ResponseEntity<String> authenticateByEmail(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<String> authenticateByEmail(@Valid @RequestBody LoginRequest loginRequest) {
         String token = userservice.authenticateByEmail(loginRequest.getLogin(), loginRequest.getPassword());
         return ResponseEntity.ok(token);
     }
 
     @PostMapping("/login/phone")
-    public ResponseEntity<String> authenticateByPhone(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<String> authenticateByPhone(@Valid @RequestBody LoginRequest loginRequest) {
         String token = userservice.authenticateByPhone(loginRequest.getLogin(), loginRequest.getPassword());
         return ResponseEntity.ok(token);
     }
