@@ -1,8 +1,12 @@
 # Banking Service
 
-This is a Java Spring Boot application created as a test task.
+This is a Java Spring Boot application built with Spring Boot, PostgreSQL, and Flyway for database migration.
+It supports basic user and account management with email or phone data.
 
-## 📦 Project Build
+### *Stack:* 
+#### *Java, Spring Boot, PostgreSQL, Docker Compose, Flyway, JWT, Testcontainer, MockMvc.* 
+
+## Project Build
 
 The project uses Maven for build management. Make sure you have the following installed:
 
@@ -28,6 +32,12 @@ docker build -t banking-service .
 docker-compose up
 ``` 
 
+## Stop the services 
+
+```bash
+docker-compose down
+```
+
 ## Access the API
 
 The application API will be available at:
@@ -36,8 +46,3 @@ The application API will be available at:
 http://localhost:8080
 ```
 
-## Stop the services 
-
-```bash
-docker-compose down
-```
