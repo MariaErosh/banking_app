@@ -43,5 +43,4 @@ public class EmailController {
         return ResponseEntity.noContent().build();
     }
 
-    //TODO добавить validation exception handler
 }

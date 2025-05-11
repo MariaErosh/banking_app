@@ -16,7 +16,7 @@ public class UserDto {
 
     private final List<String> phones;
 
-    private final BigDecimal account;
+    private final BigDecimal balance;
 
 
     public UserDto(User user) {
@@ -24,7 +24,7 @@ public class UserDto {
         this.name = user.getName();
         this.emails = user.getEmails().stream().map(EmailData::getEmail).toList();
         this.phones = user.getPhones().stream().map(PhoneData::getPhone).toList();
-        this.account = user.getAccount();
+        this.balance = user.getAccount().getBalance();
     }
 
     public Long getId() {
@@ -43,6 +43,6 @@ public class UserDto {
         return phones;
     }
 
-    public BigDecimal getAccount() { return account; }
+    public BigDecimal getBalance() { return balance; }
 
 }

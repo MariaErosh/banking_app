@@ -22,6 +22,16 @@ public class Account {
     @Column(name = "init_balance", precision = 19, scale = 2)
     private BigDecimal initBalance;
 
+    public Account(BigDecimal balance, User user) {
+        this.balance = balance;
+        this.initBalance = balance;
+        this.user = user;
+    }
+
+    protected Account() {
+        // jpa
+    }
+
     public BigDecimal getBalance() {
         return balance;
     }

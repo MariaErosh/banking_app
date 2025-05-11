@@ -6,13 +6,18 @@ import com.pioner.banking.dao.entity.User;
 import com.pioner.banking.dao.repository.PhoneDataRepository;
 import com.pioner.banking.dao.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class PhoneService {
+    private static final Logger log = LoggerFactory.getLogger(EmailService.class);
+
     private final PhoneDataRepository phoneDataRepository;
     private final UserRepository userRepository;
 
@@ -27,46 +32,62 @@ public class PhoneService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
+
     public void addPhone(Long userId, String phone) {
+        log.info("Adding phone '{}' to userId {}", phone, userId);
+
         if (phoneDataRepository.existsByPhone(phone)) {
-            throw new IllegalArgumentException("Email is already in use");
+            log.warn("Phone is already in use");
+            throw new IllegalArgumentException("Phone is already in use");
         }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> {
+                    log.error("User not found with id - {}", userId);
+                    return new IllegalArgumentException("User not found");
+                });
 
-        PhoneData newPhone = new PhoneData();
-        newPhone.setPhone(phone);
-        newPhone.setUser(user);
+        PhoneData newPhone = new PhoneData(user, phone);
 
         phoneDataRepository.save(newPhone);
+        log.info("Added successfully");
     }
 
-    @Transactional
+
     public void updatePhone(Long userId, String oldEmail, String newEmail) {
         PhoneData existingPhone = phoneDataRepository.findByPhoneAndUserId(oldEmail, userId)
-                .orElseThrow(() -> new IllegalArgumentException("Email not found for the current user"));
+                .orElseThrow(() -> {
+                    log.warn("Old phone not found");
+                    return new IllegalArgumentException("Phone not found for the current user");
+                });
 
         if (phoneDataRepository.existsByPhone(newEmail)) {
-            throw new IllegalArgumentException("The new email is already in use");
+            log.warn("The new phone is already in use");
+            throw new IllegalArgumentException("The new phone is already in use");
         }
 
         existingPhone.setPhone(newEmail);
         phoneDataRepository.save(existingPhone);
+        log.info("Updated successfully");
     }
 
-    @Transactional
+
     public void deletePhone(Long userId, String email) {
+        log.info("Deleting phone '{}' for userId {}", email, userId);
         PhoneData existingEmail = phoneDataRepository.findByPhoneAndUserId(email, userId)
-                .orElseThrow(() -> new IllegalArgumentException("Email not found for the current user"));
+                .orElseThrow(() -> {
+                    log.warn("Phone not found");
+                    return new IllegalArgumentException("Phone not found for the current user");
+                });
 
         List<PhoneData> allEmails = phoneDataRepository.findByUserId(userId);
         if (allEmails.size() <= 1) {
-            throw new IllegalStateException("The user must have at least one email");
+            log.warn("Deletion stopped: user must have at least one phone");
+            throw new IllegalStateException("The user must have at least one phone");
         }
 
         phoneDataRepository.delete(existingEmail);
+        log.info("Deleted successfully");
     }
 
 }

@@ -21,7 +21,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query("SELECT a FROM Account a WHERE a.user.id = :userId")
     Optional<Account> getAccountForUpdateByUserId(@Param("userId") Long userId);
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT a FROM Account a WHERE a.balance < a.initBalance * 2.07")
     Page<Account> findAccountsForBalanceIncrease(Pageable pageable);
 }

@@ -42,6 +42,5 @@ public class PhoneController {
         return ResponseEntity.noContent().build();
     }
 
-    //TODO добавить validation exception handler
 
 }

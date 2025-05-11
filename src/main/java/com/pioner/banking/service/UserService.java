@@ -42,26 +42,35 @@ public class UserService {
     public String authenticateByEmail(String email, String password) {
         log.info("Authenticating by email {}", email);
         EmailData emailData = emailDataRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email"));
+                .orElseThrow(() -> {
+                    log.warn("Authentication failed: email not found - {}", email);
+                    return new IllegalArgumentException("Invalid email");
+                });
 
         User user = emailData.getUser();
         if (!passwordEncoder.matches(password, user.getPassword())) {
+            log.warn("Authentication failed: invalid password for user id - {}", user.getId());
             throw new IllegalArgumentException("Invalid password");
         }
-
+        log.info("Authentication successful by email for user id -{}", user.getId());
         return jwtUtil.generateToken(user.getId());
     }
 
     public String authenticateByPhone(String phone, String password) {
         log.info("Authenticating by phone {}", phone);
         PhoneData phoneData = phoneDataRepository.findByPhone(phone)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid phone"));
+                .orElseThrow(() -> {
+                    log.warn("Authentication failed: email not found - {}", phone);
+                    return new IllegalArgumentException("Invalid phone");
+                });
 
         User user = phoneData.getUser();
         if (!passwordEncoder.matches(password, user.getPassword())) {
+            log.warn("Authentication failed: invalid password for user id - {}", user.getId());
             throw new IllegalArgumentException("Invalid password");
         }
 
+        log.info("Authentication successful by phone for user id -{}", user.getId());
         return jwtUtil.generateToken(user.getId());
     }
 

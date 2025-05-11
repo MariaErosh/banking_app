@@ -17,6 +17,15 @@ public class PhoneData {
     @Column(name = "phone")
     private String phone;
 
+    public PhoneData(User user, String phone) {
+        this.user = user;
+        this.phone = phone;
+    }
+
+    protected PhoneData() {
+        // jpa
+    }
+
     public String getPhone() {
         return phone;
     }

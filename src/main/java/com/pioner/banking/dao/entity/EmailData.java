@@ -16,6 +16,15 @@ public class EmailData {
     @Column(name = "email")
     private String email;
 
+    public EmailData(User user, String email) {
+        this.user = user;
+        this.email = email;
+    }
+
+    protected EmailData() {
+        // jpa
+    }
+
     public String getEmail() {
         return email;
     }
