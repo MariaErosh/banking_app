@@ -1,33 +1,33 @@
 README.md
-target/
+core-service/target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+currency-service/HELP.md
+currency-service/target/
+
 ### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+core-service/.apt_generated
+core-service/.classpath
+core-service/.factorypath
+core-service/.project
+core-service/.settings
+core-service/.springBeans
+core-service/.sts4-cache
+currency-service/.apt_generated
+currency-service/.classpath
+currency-service/.factorypath
+currency-service/.project
+currency-service/.settings
+currency-service/.springBeans
+currency-service/.sts4-cache
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
