@@ -5,8 +5,29 @@ services:
     build: ./core-service
     ports:
       - "8080:8080"
+    environment:
+      - DATASOURCE_URL=jdbc:postgresql://postgres:5432/banking
+      - DATASOURCE_USERNAME=bank_user
+      - DATASOURCE_PASSWORD=bank_pass
+    depends_on:
+      - postgres
 
   service-b:
     build: ./currency-service
     ports:
-      - "8081:8080"
+      - "8081:8081"
+    environment:
+      - DATASOURCE_URL=jdbc:postgresql://postgres:5432/currency
+      - DATASOURCE_USERNAME=currency_user
+      - DATASOURCE_PASSWORD=currency_pass
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"

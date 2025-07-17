@@ -12,6 +12,16 @@ services:
       - "5433:5432"
     volumes:
       - currency-data:/var/lib/postgresql/data
+  app:
+    build: ./currency-service
+    depends_on:
+      - currency-db
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://currency-db:5432/currency
+      DATASOURCE_USERNAME: myuser
+      DATASOURCE_PASSWORD: mypassword
+    ports:
+      - "8080:8080"
 
 volumes:
   currency-data:

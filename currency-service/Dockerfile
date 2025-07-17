@@ -2,7 +2,7 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY target/currency*.jar app.jar
+COPY target/currency-service*.jar app.jar
 
 EXPOSE 8081
 

@@ -2,7 +2,7 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY target/banking*.jar app.jar
+COPY target/core-service*.jar app.jar
 
 EXPOSE 8080
 
